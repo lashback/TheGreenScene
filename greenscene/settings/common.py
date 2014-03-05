@@ -53,11 +53,12 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
 
     #External Apps
-    # 'south',
+    'south',
     'compressor',
 
     # Project Apps
     'greenscene.apps.core',
+    'greenscene.apps.Unofficial',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -79,18 +80,20 @@ WSGI_APPLICATION = 'greenscene.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'greenscene',
+        'PASSWORD': 'chapstickhelps'
     }
 }
 
-import sys
-if 'test' in sys.argv:
+
+#import sys
+#if 'test' in sys.argv:
     # Test-specific DB
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'test.db'
-    }
+ #   DATABASES['default'] = {
+  #      'ENGINE': 'django.db.backends.sqlite3',
+   #     'NAME': 'test.db'
+   # }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
