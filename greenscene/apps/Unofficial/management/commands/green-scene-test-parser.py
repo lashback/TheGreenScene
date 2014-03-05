@@ -11,8 +11,9 @@ from TwitterAPI import TwitterAPI
 from greenscene.keys import *
 from greenscene.apps.Unofficial.models import *
 from django.core.management.base import BaseCommand, CommandError
-from time import strptime, strftime
 from string import split
+#from time import strptime, strftime
+import datetime
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
@@ -47,8 +48,8 @@ class Command(BaseCommand):
                 print coordinate_string
                 created = tweet['created_at']
                 print created
-                created = strptime(created, '%a %b %d %H:%M:%S +0000 %Y')
-                created_string = created.strftime( '%Y-%m-%d %H:%M:%S')
+                created = datetime.datetime.strptime(created, '%a %b %d %H:%M:%S +0000 %Y')
+                created_string = created.strftime('%Y-%m-%d %H:%M:%S')
                 print created
                 text = tweet['text']
                 print text
