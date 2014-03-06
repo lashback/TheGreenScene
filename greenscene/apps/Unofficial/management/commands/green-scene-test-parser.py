@@ -25,17 +25,17 @@ class Command(BaseCommand):
         #todo: build in error codes. What happens when we go over our rate limit?
         def filter_tweets(data):
             tweet_list = []
-            hashtarget = "unofficial"
+            hashtarget = "Unofficial"
             for tweet in data:
             	for hashtag in tweet['entities']['hashtags']:
             		if hashtarget in hashtag['text']:
             			tweet_list.append(tweet)
-            #print tweet_list
+            print tweet_list
             return tweet_list
 
         def load_tweets(tweets):
             for tweet in tweets:
-                #print tweet
+                print tweet
                 handle = tweet['user']['screen_name']
                 name = tweet['user']['name']
                 print name
@@ -53,10 +53,17 @@ class Command(BaseCommand):
                 print created
                 text = tweet['text']
                 print text
+
+                retweets = tweet['retweet_count']
+
+
+                #image_url = tweet['entities']['media'][0]['media_url']
+
                 
-                if tweet['entities']['media'][0]:
-                    image_url = tweet['entities']['media'][0]['media_url']
-                    print image_url
+                for entity in tweet['entities']:
+                    if 'media' in entity:
+                        image_url = tweet['entities']['media'][0]['media_url']
+                        print image_url
 
 
                 user_import, user_created = User.objects.get_or_create(
@@ -71,11 +78,14 @@ class Command(BaseCommand):
                     coordinate_string = coordinate_string,
                     created = created_string,
                     text = text
-
                     )
                 if image_url:
                     tweet_import.image_url = image_url
                     tweet_import.save()
+
+                tweet_url = "http://twitter.com/%s/status/%s" %(name, tweet_id)
+                tweet_import.tweet_url = tweet_url
+                tweet_import.save()
 
 
         tweets = filter_tweets(r)

@@ -1,7 +1,7 @@
-from tastypie.contrib.resources import ModelResource  # Using GeoDjango ModelResource
+from tastypie.resources import ModelResource  # Using GeoDjango ModelResource
 from django.http import HttpResponse
 from tastypie.resources import ALL, ALL_WITH_RELATIONS
-from apps.Unofficial.models import Tweet, User
+from greenscene.apps.Unofficial.models import Tweet, User
 from tastypie.cache import SimpleCache
 from django.utils import simplejson as json
 
@@ -21,7 +21,7 @@ class TweetResource(ModelResource):
 
 
         def dehydrate(self, bundle):
-            bundle.data['geometry'] = "coordinates": bundle.obj.coordinate_string
+            bundle.data['geometry'] = {"coordinates": coordinate_string}
             bundle.data['type'] = "Feature"
             bundle.data['properties'] = {
                                         "name": bundle.obj.User.name,
